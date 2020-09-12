@@ -1,3 +1,49 @@
 * {
 	margin: 0px;
+	font-family: Arial, sans-serif;
+}
+
+line {
+	stroke: black;
+	fill: black;
+	stroke-width: 1px;
+}
+
+div {
+	font-size: 10px;
+}
+
+#title {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#subtitle {
+	font-size: 18px;
+}
+
+#main {
+	font-size: 12px;
+}	
+
+image {
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+}
+
+.border {
+	fill: none;
+	stroke-width: 0px;
+	stroke: black;
+}
+
+.button {
+	stroke: black;
+	fill: green;
+}
+
+.button-text {
+	pointer-events: none;
+	fill: white;
 }

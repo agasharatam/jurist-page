@@ -2,9 +2,126 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Agasha Ratam</title>
-		<link rel="stylesheet" src="style.css">
+		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="https://d3js.org/d3.v6.js"></script>
 	</head>
 	<body>
-		<p>Hello</p>
+		<script type="text/javascript">
+			var w = 1248;
+			var h = 624;
+
+			var picW = 120;
+			var picH = 120;
+			var picMarginH = 80;
+			var textMarginH = 20;
+			var marginT = 100;
+
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h)
+
+			svg.append("image")
+				.attr("href", "agasha-ratam-picture.jpg")
+				.attr("x", picMarginH)
+				.attr("y", marginT)
+				.attr("width", 120)
+				.attr("height", 120);
+
+			svg.append("line")
+				.attr("id", "panel-separator")
+				.attr("x1", picMarginH + picW + picMarginH)
+				.attr("y1", 30)
+				.attr("x2", picMarginH + picW + picMarginH)
+				.attr("y2", h - 30)
+
+			svg.append("text")
+				.attr("text-anchor", "middle")
+				.attr("dominant-baseline", "central")
+				.attr("x", picMarginH + picW / 2)
+				.attr("y", marginT + picH + 20)
+				.text("Agasha Ratam")
+
+			var foDiv = svg.append("foreignObject")
+				.attr("x", textMarginH)
+				.attr("y", marginT + picH + 40)
+				.attr("width", (picMarginH + picW + picMarginH - textMarginH) - textMarginH)
+				.attr("height", (h - 50) - (50 + picH + 20))
+				.append("xhtml:div")
+			
+			foDiv.append("p")
+				.html("Agasha is a senior at Yale University majoring in <em>Economics</em> and in <em>Electrical Engineering & Computer Science</em>.")
+
+			foDiv.append("br")
+			foDiv.append("p")
+				.html("Agasha's academic interests include neural nets and data visualization. In Summer 2019, he interned at Vaillant in Remscheid, Germany, where he used neural nets to predict the remaining useful life of heating devices. Agasha grew up in Jakarta, Indonesia, and is currently located in Boston. Outside of academics, this summer he kept himself busy with long-distance running, cooking, and playing guitar.")
+
+			
+			var panelX = picMarginH + picW + picMarginH;
+			var panelY = 30;
+			var panelW = w - panelX;
+			var panelH = (h - 30) - panelY;
+			svg.append("text")
+				.attr("id", "title")
+				.attr("dominant-baseline", "hanging")
+				.attr("x", panelX + 20)
+				.attr("y", panelY)
+				.text("Using Writing Style to Predict Reader Engagement of an Article")
+
+			svg.append("text")
+				.attr("id", "subtitle")
+				.attr("dominant-baseline", "hanging")
+				.attr("x", panelX + 20)
+				.attr("y", panelY + 35)
+				.text("A Jurist Digital Scholars project")
+
+			var foDiv = svg.append("foreignObject")
+				.attr("x", panelX + 20)
+				.attr("y", panelY + 35 + 18 + 20)
+				.attr("width", 600)
+				.attr("height", panelH)
+				.append("xhtml:div")
+				.attr("id", "main")
+
+			foDiv.append("p")
+				.html("The goal of this project is to extract insights from JURIST’s historical articles and Google Analytics data and to inform legal-news writers of possible writing strategies they can implement in their articles to reach a broader audience. The first step of this project is establishing a scale that captures how accessible a legal news or commentary article is to the general public. This scale will likely take into account user engagement metrics, including page views, time spent on the page, and exit rate. Afterward, predictors related to readability will be used to predict the accessibility of articles. This project will also explore the use of neural nets in the prediction process.")
+
+			foDiv.append("br")
+			foDiv.append("p")
+				.html("Second paragraph")
+
+			svg.append("rect")
+				.attr("class", "border")
+				.attr("x", panelX + 50)
+				.attr("y", panelY + 250 - 1)
+				.attr("width", (panelX + 600 - 50) - (panelX + 50))
+				.attr("height", ((panelX + panelH - 50) - (panelX + 50)) / 1.93 + 2)
+
+			svg.append("image")
+				.attr("href", "screenshot.png")
+				.attr("x", panelX + 50)
+				.attr("y", panelY + 250)
+				.attr("width", (panelX + 600 - 50) - (panelX + 50))
+				.attr("height", ((panelX + panelH - 50) - (panelX + 50)) / 1.93);
+
+			var a = svg.append("a")
+				.attr("href", "http://agasharatam.pythonanywhere.com")
+
+			a.append("rect")
+				.attr("class", "button")
+				.attr("x", panelX + 800)
+				.attr("y", panelY + 100)
+				.attr("width", 100)
+				.attr("height", 50)
+			a.append("text")
+				.attr("class", "button-text")
+				.attr("text-anchor", "middle")
+				.attr("dominant-baseline", "central")
+				.attr("x", panelX + 800 + 50)
+				.attr("y", panelY + 100 + 25)
+				.text("Use Tool")
+				
+
+		</script>
 	</body>
 </html>
