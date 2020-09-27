@@ -183,6 +183,7 @@
 				})
 
 			var leftArrowText = svg.append("text")
+				.attr("pointer-events", "none")
 				.attr("stroke", "none")
 				.attr("fill", "none")
 				.attr("id", "left-arrow-text")
@@ -222,6 +223,7 @@
 				})
 
 			var rightArrowText = svg.append("text")
+				.attr("pointer-events", "none")
 				.attr("stroke", "green")
 				.attr("id", "right-arrow-text")
 				.attr("class", "arrow-text")
