@@ -4,13 +4,13 @@
 }
 
 line {
-	stroke: black;
-	fill: black;
-	stroke-width: 1px;
+	stroke: green;
+	fill: green;
+	stroke-width: 2px;
 }
 
 div {
-	font-size: 10px;
+	font-size: 12px;
 }
 
 #title {
@@ -23,7 +23,7 @@ div {
 }
 
 #main {
-	font-size: 12px;
+	font-size: 14px;
 }	
 
 image {
@@ -34,7 +34,7 @@ image {
 
 .border {
 	fill: none;
-	stroke-width: 0px;
+	stroke-width: 1px;
 	stroke: black;
 }
 
@@ -47,3 +47,8 @@ image {
 	pointer-events: none;
 	fill: white;
 }
+
+.arrow-text {
+	pointer-events: none;
+}
+

@@ -77,49 +77,215 @@
 
 			var foDiv = svg.append("foreignObject")
 				.attr("x", panelX + 20)
-				.attr("y", panelY + 35 + 18 + 20)
-				.attr("width", 600)
+				.attr("y", panelY + 35 + 18 + 30)
+				.attr("width", 700)
 				.attr("height", panelH)
 				.append("xhtml:div")
 				.attr("id", "main")
 
 			foDiv.append("p")
-				.html("The goal of this project is to extract insights from JURIST’s historical articles and Google Analytics data and to inform legal-news writers of possible writing strategies they can implement in their articles to reach a broader audience. The first step of this project is establishing a scale that captures how accessible a legal news or commentary article is to the general public. This scale will likely take into account user engagement metrics, including page views, time spent on the page, and exit rate. Afterward, predictors related to readability will be used to predict the accessibility of articles. This project will also explore the use of neural nets in the prediction process.")
-
+				.html("The goal of this project is to extract insights from JURIST’s archive of 10,000+ news and commentary articles paired with Google Analytics data to inform legal news writers on how their writing style affects user engagement with their article.")
 			foDiv.append("br")
 			foDiv.append("p")
-				.html("Second paragraph")
+				.html("A common goal among news websites is to make articles more accessible to the general public. Beyond the legal news context, websites such as Wikipedia have articles written in <em>Simple English</em>, implementing simple grammar whenever possible with the intention of making the information more accessible to readers. While legal news websites are naturally distinct from sites such as Wikipedia, this project aims to study whether improving aspects of an author's writing style could prompt a higher level of user engagement.") 
+			/**
+			foDiv.append("br")
 
+			foDiv.append("p")
+				.html("The project can be broken down into multiple stages. The relevant data sets are first merged and cleaned. Features including measurements of readability, voice of sentences, and frequencies of certain parts of speech, are then computed. The most useful features are then selected and used to train a feedforward neural network, predicting the user engagement (measured by the page exit rate) of an article. A text editing web tool embedded with the neural network predictions was constructed to help writers assess how wtheir writing style is likely to impact user engagement, based on previous JURIST articles.")
+				*/
+
+			/**
 			svg.append("rect")
 				.attr("class", "border")
 				.attr("x", panelX + 50)
 				.attr("y", panelY + 250 - 1)
 				.attr("width", (panelX + 600 - 50) - (panelX + 50))
 				.attr("height", ((panelX + panelH - 50) - (panelX + 50)) / 1.93 + 2)
+			*/
 
+			/**
 			svg.append("image")
 				.attr("href", "screenshot.png")
 				.attr("x", panelX + 50)
 				.attr("y", panelY + 250)
 				.attr("width", (panelX + 600 - 50) - (panelX + 50))
 				.attr("height", ((panelX + panelH - 50) - (panelX + 50)) / 1.93);
+			*/
+
+			var abcGap = 100;
+			var num = 0;
+			var center = panelX + abcGap + 365 -  abcGap;
+
+			var circles = svg.append("g")
+				.selectAll("circle")
+				.data([center - 20, center - 10, center, center + 10, center + 20])
+				.enter()
+				.append("circle")
+				.attr("cx", function(d) {
+					return d;
+				})
+				.attr("cy", panelY + 270 - 10)
+				.attr("r", 2.5)
+				.attr("stroke", "black")
+				.attr("fill", function(d, i) {
+					if (i == 0) {
+						return "black";
+					}
+					else {
+						return "none";
+					}
+				});
+
+			svg.append("rect")
+				.attr("class", "border")
+				.attr("x", panelX + abcGap)
+				.attr("y", panelY + 270)
+				.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
+				.attr("height", 220);
+
+			var files = ["1.png", "2.png", "3.png", "4.png", "5.png"]
+
+			var im = svg.append("image")
+				.attr("href", files[0])
+				.attr("alttext", "PNG file not found!")
+				.attr("x", panelX + abcGap)
+				.attr("y", panelY + 270)
+				.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
+				.attr("height", 220);
+
+			svg.append("rect")
+				.attr("fill", "white")
+				.attr("x", panelX + abcGap - 21)
+				.attr("y", panelY + 380 - 10)
+				.attr("width", 20)
+				.attr("height", 20)
+				.on("click", function() {
+					if (num > 0) {
+						num -= 1;
+						rightArrowText.attr("stroke", "green")
+						if (num == 0) {
+							leftArrowText.attr("stroke", "none")
+							leftArrowText.attr("fill", "none")
+						}
+						im.attr("href", files[num])
+						desc.html(descs[num]);
+
+						circles.attr("fill", function(d, i) {
+							if (i == num) {
+								return "black"
+							}
+							else {
+								return "none"
+							}
+						})
+					}
+				})
+
+			var leftArrowText = svg.append("text")
+				.attr("stroke", "none")
+				.attr("fill", "none")
+				.attr("id", "left-arrow-text")
+				.attr("class", "arrow-text")
+				.attr("text-anchor", "middle")
+				.attr("dominant-baseline", "central")
+				.attr("x", panelX + abcGap - 20 + 10)
+				.attr("y", panelY + 380 - 10 + 10)
+				.text("<")
+
+			svg.append("rect")
+				.attr("fill", "white")
+				.attr("x", panelX + 730 - abcGap + 1)
+				.attr("y", panelY + 380 - 10)
+				.attr("width", 20)
+				.attr("height", 20)
+				.on("click", function() {
+					if (num < 4) {
+						num += 1;
+						leftArrowText.attr("stroke", "green")
+						if (num == 4) {
+							rightArrowText.attr("stroke", "none")
+							rightArrowText.attr("fill", "none")
+						}
+						desc.html(descs[num]);
+						im.attr("href", files[num])
+
+						circles.attr("fill", function(d, i) {
+							if (i == num) {
+								return "black"
+							}
+							else {
+								return "none"
+							}
+						})
+					}
+				})
+
+			var rightArrowText = svg.append("text")
+				.attr("stroke", "green")
+				.attr("id", "right-arrow-text")
+				.attr("class", "arrow-text")
+				.attr("text-anchor", "middle")
+				.attr("dominant-baseline", "central")
+				.attr("x", panelX + 730 - abcGap + 10)
+				.attr("y", panelY + 380 - 10 + 10)
+				.text(">")
+
+			svg.append("rect")
+				.attr("class", "border")
+				.attr("x", panelX + abcGap)
+				.attr("y", panelY + 270)
+				.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
+				.attr("height", 220);
+
+			
+			var descs = ["<b>Data cleaning and merging</b><br>Data sets including Google Analytics data, news, and commentary articles are first cleaned, parsing XML files and extracting relevant information for each article. These data sets are then merged by matching article titles, aggregating annual analytics data across all years. The output is one table with each row representing a unique article, and with columns including the article title, article text, tags, and analytics data such as page views and exit rate.", 
+						"<b>Data processing</b><br>", 
+						"<b>Feature selection</b><br>", 
+						"<b>Neural network training</b><br>", 
+						"<b>Web tool development</b><br>"]
+
+			var desc = svg.append("foreignObject")
+						.attr("x", panelX + abcGap)
+						.attr("y", panelY + 500)
+						.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
+						.attr("height", 70)
+						.append("xhtml:div")
+						.html(descs[0])
 
 			var a = svg.append("a")
 				.attr("href", "http://agasharatam.pythonanywhere.com")
 
 			a.append("rect")
 				.attr("class", "button")
-				.attr("x", panelX + 800)
+				.attr("x", panelX + 775)
 				.attr("y", panelY + 100)
-				.attr("width", 100)
-				.attr("height", 50)
+				.attr("width", 150)
+				.attr("height", 40)
 			a.append("text")
 				.attr("class", "button-text")
 				.attr("text-anchor", "middle")
 				.attr("dominant-baseline", "central")
-				.attr("x", panelX + 800 + 50)
-				.attr("y", panelY + 100 + 25)
-				.text("Use Tool")
+				.attr("x", panelX + 775 + 75)
+				.attr("y", panelY + 100 + 20)
+				.text("Go to tool")
+
+			var a2 = svg.append("a")
+				.attr("href", "ratam-jurist-report.pdf")
+
+			a2.append("rect")
+				.attr("class", "button")
+				.attr("x", panelX + 775)
+				.attr("y", panelY + 150)
+				.attr("width", 150)
+				.attr("height", 40)
+			a2.append("text")
+				.attr("class", "button-text")
+				.attr("text-anchor", "middle")
+				.attr("dominant-baseline", "central")
+				.attr("x", panelX + 775 + 75)
+				.attr("y", panelY + 150 + 20)
+				.text("Read full report")
 				
 
 		</script>
