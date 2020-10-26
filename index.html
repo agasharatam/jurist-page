@@ -21,12 +21,24 @@
 						.attr("width", w)
 						.attr("height", h)
 
+			svg.append("foreignObject")
+				.attr("x", picMarginH)
+				.attr("y", marginT)
+				.attr("width", 120)
+				.attr("height", 120)
+				.append("xhtml:img")
+				.style("border-radius", "50%")
+				.attr("width", 120)
+				.attr("height", 120)
+				.attr("src", "agasha-ratam-picture.jpg")
+			/**
 			svg.append("image")
 				.attr("href", "agasha-ratam-picture.jpg")
 				.attr("x", picMarginH)
 				.attr("y", marginT)
 				.attr("width", 120)
 				.attr("height", 120);
+			*/
 
 			svg.append("line")
 				.attr("id", "panel-separator")
@@ -137,22 +149,61 @@
 					}
 				});
 
+			/**
 			svg.append("rect")
 				.attr("class", "border")
 				.attr("x", panelX + abcGap)
 				.attr("y", panelY + 270)
 				.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
 				.attr("height", 220);
+			*/
 
 			var files = ["1.png", "2.png", "3.png", "4.png", "5.png"]
 
-			var im = svg.append("image")
-				.attr("href", files[0])
-				.attr("alttext", "PNG file not found!")
+			var imW = (panelX + 730 - abcGap) - (panelX + abcGap);
+
+
+
+			var svg2 = svg.append("svg")
 				.attr("x", panelX + abcGap)
 				.attr("y", panelY + 270)
 				.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
+				.attr("height", 220)
+
+			var imSvg = svg2.append("svg")
+						.attr("x", 0)
+						.attr("y", 0)
+						.attr("width", 5 * imW)
+						.attr("height", 220)
+
+			files.forEach(function(d, i) {
+				imSvg.append("image")
+					.attr("href", d)
+					.attr("x", i * imW)
+					.attr("y", 0)
+					.attr("width", imW)
+					.attr("height", 220)
+			})
+
+			/**
+
+			var leftIm = svg2.append("image")
+				.attr("href", "no_image.png")
+				.attr("x", -imW)
+				.attr("y", 0)
+				.attr("width", imW)
+				.attr("height", 220)
+
+			var im = svg2.append("image")
+				.attr("href", files[0])
+				.attr("alttext", "PNG file not found!")
+				.attr("x", 0)
+				.attr("y", 0)
+				.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
 				.attr("height", 220);
+
+			var rightI
+			*/
 
 			svg.append("rect")
 				.attr("fill", "white")
@@ -161,14 +212,19 @@
 				.attr("width", 20)
 				.attr("height", 20)
 				.on("click", function() {
+					fresh = false;
 					if (num > 0) {
 						num -= 1;
 						rightArrowText.attr("stroke", "green")
+						rightArrowText.attr("fill", "green")
 						if (num == 0) {
 							leftArrowText.attr("stroke", "none")
 							leftArrowText.attr("fill", "none")
 						}
-						im.attr("href", files[num])
+						//im.attr("href", files[num]
+						imSvg.transition()
+							.duration(500)
+							.attr("x", -num * imW)
 						desc.html(descs[num]);
 
 						circles.attr("fill", function(d, i) {
@@ -183,7 +239,6 @@
 				})
 
 			var leftArrowText = svg.append("text")
-				.attr("pointer-events", "none")
 				.attr("stroke", "none")
 				.attr("fill", "none")
 				.attr("id", "left-arrow-text")
@@ -201,15 +256,21 @@
 				.attr("width", 20)
 				.attr("height", 20)
 				.on("click", function() {
+					fresh = false;
 					if (num < 4) {
 						num += 1;
 						leftArrowText.attr("stroke", "green")
+						leftArrowText.attr("fill", "green")
 						if (num == 4) {
 							rightArrowText.attr("stroke", "none")
 							rightArrowText.attr("fill", "none")
 						}
 						desc.html(descs[num]);
-						im.attr("href", files[num])
+						//im.attr("href", files[num])
+						imSvg.transition()
+							.duration(500)
+							.attr("x", -num * imW)
+
 
 						circles.attr("fill", function(d, i) {
 							if (i == num) {
@@ -223,8 +284,8 @@
 				})
 
 			var rightArrowText = svg.append("text")
-				.attr("pointer-events", "none")
 				.attr("stroke", "green")
+				.attr("fill", "green")
 				.attr("id", "right-arrow-text")
 				.attr("class", "arrow-text")
 				.attr("text-anchor", "middle")
@@ -233,19 +294,23 @@
 				.attr("y", panelY + 380 - 10 + 10)
 				.text(">")
 
+			/**
 			svg.append("rect")
 				.attr("class", "border")
 				.attr("x", panelX + abcGap)
 				.attr("y", panelY + 270)
 				.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
 				.attr("height", 220);
+			*/
+
+			console.log(730 - abcGap * 2)
 
 			
-			var descs = ["<b>Data cleaning and merging</b><br>Data sets including Google Analytics data, news, and commentary articles are first cleaned, parsing XML files and extracting relevant information for each article. These data sets are then merged by matching article titles, aggregating annual analytics data across all years. The output is one table with each row representing a unique article, and with columns including the article title, article text, tags, and analytics data such as page views and exit rate.", 
-						"<b>Data processing</b><br>", 
-						"<b>Feature selection</b><br>", 
-						"<b>Neural network training</b><br>", 
-						"<b>Web tool development</b><br>"]
+			var descs = ["<b>Data cleaning and merging</b><br>XML archives of JURIST news and commentary articles are first parsed, extracting relevant information for each article. These data sets are then merged with the Google Analytics data by matching article titles, aggregating annual analytics data across all years. The output is one table that contains one row per article, and has columns including the article title, article text, tags, and analytics data such as page views and exit rate.", 
+						"<b>Data processing</b><br>Each article is then further processed, introducing new variables that will be candidate features for the next step. These variables include those thought to be describe an author's writing style, such as readability, the frequency of adjectives and adverbs, the usage of the passive voice, and so on.", 
+						"<b>Feature selection</b><br>We then choose the features that will be the inputs to the neural network by eliminating those that are redundant or add little variance in the data set. Principle component analysis (PCA) was used to summarize eight different measures of readability (Kincaid Grade Level, ARI, Coleman-Liau Index, Flesch Reading Ease, Gunning-Fox Index, Lix, SMOG, Rix) using just one value.", 
+						"<b>Neural network training</b><br>The selected features are used as inputs for a feedforward dense neural network. The input layer contains 25 neurons. We used 5 hidden layers with 10 neurons each. Finally, the output layer contains only one neuron: the page exit rate of the article. The performance was compared to a naive recurrent neural network with long short-term memory. The feedforward neural network outperforms the benchmark in terms of the loss function.", 
+						"<b>Web tool development</b><br>Finally, a web page was developed to showcase the prediction tool. It is designed for people interested to write for JURIST to edit their article and see how tweaking it changes the prediction of user engagement, based on historical JURIST data. It also displays some of the metrics that are fed into the neural network."]
 
 			var desc = svg.append("foreignObject")
 						.attr("x", panelX + abcGap)
@@ -253,6 +318,7 @@
 						.attr("width", (panelX + 730 - abcGap) - (panelX + abcGap))
 						.attr("height", 70)
 						.append("xhtml:div")
+						.attr("id", "pic-desc")
 						.html(descs[0])
 
 			var a = svg.append("a")
@@ -262,6 +328,7 @@
 				.attr("class", "button")
 				.attr("x", panelX + 775)
 				.attr("y", panelY + 100)
+				.attr("rx", 10)
 				.attr("width", 150)
 				.attr("height", 40)
 			a.append("text")
@@ -279,6 +346,7 @@
 				.attr("class", "button")
 				.attr("x", panelX + 775)
 				.attr("y", panelY + 150)
+				.attr("rx", 10)
 				.attr("width", 150)
 				.attr("height", 40)
 			a2.append("text")
@@ -288,6 +356,46 @@
 				.attr("x", panelX + 775 + 75)
 				.attr("y", panelY + 150 + 20)
 				.text("Read full report")
+
+			var fresh = true;
+
+			window.setInterval(function() {
+				if(fresh) {
+					num = (num + 1) % 5;
+
+					if (num > 0) {
+						leftArrowText.attr("stroke", "green")
+						leftArrowText.attr("fill", "green")
+					}
+					else {
+						leftArrowText.attr("stroke", "none")
+						leftArrowText.attr("fill", "none")
+					}
+					if (num < 4) {
+						rightArrowText.attr("stroke", "green")
+						rightArrowText.attr("fill", "green")
+					}
+					else {
+						rightArrowText.attr("stroke", "none")
+						rightArrowText.attr("fill", "none")
+					}
+
+					imSvg.transition()
+						.duration(500)
+						.attr("x", -num * imW)
+					desc.html(descs[num]);
+
+					circles.attr("fill", function(d, i) {
+						if (i == num) {
+							return "black"
+						}
+						else {
+							return "none"
+						}
+					})
+				}
+			}, 5000)
+
 				
 
 		</script>

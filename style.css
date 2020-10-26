@@ -1,6 +1,6 @@
 * {
 	margin: 0px;
-	font-family: Arial, sans-serif;
+	font-family: charter, Georgia, Cambria;
 }
 
 line {
@@ -11,6 +11,10 @@ line {
 
 div {
 	font-size: 12px;
+}
+
+#pic-desc {
+	font-size: 10px;
 }
 
 #title {
@@ -39,7 +43,7 @@ image {
 }
 
 .button {
-	stroke: black;
+	stroke: none;
 	fill: green;
 }
 
